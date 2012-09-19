@@ -1,5 +1,14 @@
 desc "Compile all assets named in config.assets.precompile, and show breakdown of their compilation speed"
 task :'assets:precompile:profile' => ['assets:environment'] do
+  if ENV['RAILS_GROUPS'].to_s.empty?
+    puts " ! assets:precompile:profile failed: be sure to invoke this with"
+    puts "   the assets group. Try:"
+    puts ""
+    puts "   $ rake assets:precompile:profile RAILS_GROUPS=assets"
+    puts ""
+    exit 1
+  end
+
   module Sprockets
     class StaticCompiler
       # Re-implement #compile to measure the time it takes.
@@ -13,6 +22,9 @@ task :'assets:precompile:profile' => ['assets:environment'] do
       def do_compile
         manifest = {}
         env.each_logical_path do |logical_path|
+          if File.basename(logical_path)[/[^\.]+/, 0] == 'index'
+            logical_path.sub!(/\/index\./, '.')
+          end
           next unless compile_path?(logical_path)
 
           show = show_message?(logical_path)

@@ -1,7 +1,7 @@
 Why you want it
 ---------------
 
-    $ bundle exec rake assets:precompile:profile
+    $ bundle exec rake assets:precompile:profile RAILS_GROUPS=assets
     application.js                                              6663ms
     new_project.js                                              367ms
     vendor.js                                                   966ms
