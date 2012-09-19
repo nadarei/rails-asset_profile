@@ -13,11 +13,28 @@ Why you want it
 How to use it
 -------------
 
-    # Gemfile
-    gem 'rails-asset_profile', github: 'nadarei/rails-asset_profile', branch: 'master'
+``` ruby
+# Gemfile
+gem 'rails-asset_profile', github: 'nadarei/rails-asset_profile', branch: 'master'
+```
+
+Caveats
+-------
+
+This generates identical digest and non-digest assets to do things faster.
+This, for most cases, is usually fine.
+
+If you're affected by this, just regenerate them properly with Rails's `rake
+assets:precompile` :-)
+
+Acknowledgements
+----------------
+
+Uses code directly taken from [sprockets-rails].
+
+[sprockets-rails]: https://github.com/rails/sprockets-rails
 
 License
 -------
 
 MIT.
-
