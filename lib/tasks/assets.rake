@@ -54,6 +54,19 @@ task :'assets:precompile:profile' => ['assets:environment'] do
       end
 
     private
+      def compile_path?(logical_path)
+        paths.each do |path|
+          case path
+          when Regexp
+            return true if path.match(logical_path)
+          when Proc
+            return true if path.call(logical_path)
+          else
+            return true if File.fnmatch(path.to_s, logical_path)
+          end
+        end
+        false
+      end
 
       def show_message?(path)
         return true if ENV['VERBOSE'] || ENV['verbose']
